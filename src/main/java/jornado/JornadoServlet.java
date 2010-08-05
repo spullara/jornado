@@ -21,6 +21,8 @@ import java.util.List;
  * TODO: I've gone to some pains to allow an app-specified Request object but didn't close the loop on this
  */
 public class JornadoServlet<R extends Request<U>, U extends WebUser> extends HttpServlet {
+  private static final long serialVersionUID = 6175864095769782000L;
+
   private final Router<R> router;
   private final UserService<U> userService;
   private final SecureCookieService secureCookieService;
