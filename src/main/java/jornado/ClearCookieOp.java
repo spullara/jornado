@@ -13,6 +13,7 @@ public class ClearCookieOp implements HeaderOp {
     public void execute(HttpServletResponse response) {
         // the horror!
         cookie.setMaxAge(0);
+        cookie.setPath("/");
         response.addCookie(cookie);
     }
 }
