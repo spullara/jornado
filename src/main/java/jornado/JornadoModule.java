@@ -57,12 +57,6 @@ public abstract class JornadoModule<R extends Request> extends AbstractModule {
     Matchers.subclassesOf(Handler.class);
 
     bind(SecureCookieService.class);
-
-    // set up the timing intercepters
-    final TimingInterceptor timingInterceptor = new TimingInterceptor();
-    bindInterceptor(Matchers.any(), Matchers.annotatedWith(Timed.class), timingInterceptor);
-    bindInterceptor(Matchers.annotatedWith(Timed.class), Matchers.any(), timingInterceptor);
-    bindInterceptor(Matchers.subclassesOf(Handler.class), Matchers.any(), timingInterceptor);
   }
 
   protected void bindLiteral(String annotationName, String value) {
