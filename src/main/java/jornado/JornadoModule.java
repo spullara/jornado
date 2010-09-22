@@ -2,13 +2,14 @@ package jornado;
 
 import com.google.common.collect.Lists;
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.name.Names;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A guice module that contains the configuration for jornado
@@ -45,8 +46,10 @@ public abstract class JornadoModule<R extends Request> extends AbstractModule {
     bind(Config.class).toInstance(config);
     bindIterable("routes", routes);
 
+    Set<Class> bound = new HashSet<Class>();
     for (RouteHandler<R> route : routes) {
-      bind(route.getHandlerClass());
+      Class<? extends Handler<R>> handlerClass = route.getHandlerClass();
+      if (bound.add(handlerClass)) bind(handlerClass);
     }
 
     bindLiteral("cookieKey", config.getCookieKey());
@@ -56,8 +59,6 @@ public abstract class JornadoModule<R extends Request> extends AbstractModule {
 
     // inject-enable the handlers
     Matchers.subclassesOf(Handler.class);
-
-    bind(SecureCookieService.class);
   }
 
   protected void bindLiteral(String annotationName, String value) {
