@@ -2,6 +2,7 @@ package jornado;
 
 import com.google.common.collect.Lists;
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.name.Names;
