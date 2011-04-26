@@ -56,7 +56,9 @@ public class ServletBackedRequest<U extends WebUser> implements Request<U> {
   }
 
   public Method getMethod() {
-    return Method.fromString(servletRequest.getMethod());
+    String method = servletRequest.getMethod();
+    if (method.equals("HEAD")) method = "GET";
+    return Method.fromString(method);
   }
 
   public String getPath() {
