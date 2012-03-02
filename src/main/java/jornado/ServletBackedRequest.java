@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class ServletBackedRequest<U extends WebUser> implements Request<U> {
   private static final Random rnd = new Random();
-  private static final int TIMEOUT_31_DAYS = 3600 * 24 * 31; // TODO: make configurable
+  private static final int TIMEOUT_14_DAYS = 3600 * 24 * 14; // TODO: make configurable
 
   private final HttpServletRequest servletRequest;
   private final UserService<U> userService;
@@ -187,7 +187,7 @@ public class ServletBackedRequest<U extends WebUser> implements Request<U> {
     U user = null;
     if (loginCookie != null) {
       try {
-        final String userId = secureCookieService.extract(loginCookie, TIMEOUT_31_DAYS);
+        final String userId = secureCookieService.extract(loginCookie, TIMEOUT_14_DAYS);
         user = userService.load(userId);
         if (user == null) {
           loginCookieInvalid.set(true);
@@ -228,7 +228,7 @@ public class ServletBackedRequest<U extends WebUser> implements Request<U> {
     String loginCookie = getCookieValue(Constants.LOGIN_COOKIE);
     if (loginCookie != null) {
       try {
-        secureCookieService.extract(loginCookie, TIMEOUT_31_DAYS);
+        secureCookieService.extract(loginCookie, TIMEOUT_14_DAYS);
         validLCookie = true;
       } catch (InvalidSecureCookieFormatException e) {
       } catch (FailedSignatureValidationException e) {
